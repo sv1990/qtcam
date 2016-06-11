@@ -47,7 +47,6 @@ class Cameraproperty : public QObject, public v4l2
     Q_OBJECT
 public:
     Cameraproperty();
-    Cameraproperty(bool enableLog);
     ~Cameraproperty();
     QStringList availableCam;
 
@@ -58,6 +57,8 @@ public:
 
     static QStringListModel modelCam;
     static bool saveLog;
+
+    static void setSaveLog(bool value);
 
 private:
     QDir qDir;

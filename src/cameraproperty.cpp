@@ -33,12 +33,13 @@ Cameraproperty::Cameraproperty()
     connect(&uvccam,SIGNAL(logHandle(QtMsgType,QString)),this,SLOT(logWriter(QtMsgType,QString)));
 }
 
-Cameraproperty::Cameraproperty(bool enableLog) {
-	saveLog	= enableLog;
-}
-
 Cameraproperty::~Cameraproperty() {
 
+}
+
+void Cameraproperty::setSaveLog(bool value)
+{
+    saveLog = value;
 }
 
 void Cameraproperty::checkforDevice() {
@@ -52,7 +53,7 @@ void Cameraproperty::checkforDevice() {
         filters << "video*";
         qDir.setNameFilters(filters);
         list << qDir.entryList(filters,QDir::Dirs ,QDir::Name);
-        qSort(list.begin(), list.end());        
+        qSort(list.begin(), list.end());
         deviceBeginNumber = list.value(0).mid(5).toInt();   //Fetching all values after "video"
         deviceEndNumber = list.value(list.count()-1).mid(5).toInt();
         for(int qDevCount=deviceBeginNumber;qDevCount<=deviceEndNumber;qDevCount++) {
@@ -119,8 +120,8 @@ void Cameraproperty::setCurrentDevice(QString deviceIndex,QString deviceName) {
 
 void Cameraproperty::createLogger() {
     if (saveLog){
-	log.close();
-	log.logFileCreation();
+    log.close();
+    log.logFileCreation();
     }
 }
 

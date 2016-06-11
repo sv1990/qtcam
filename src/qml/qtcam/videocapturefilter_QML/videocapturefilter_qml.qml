@@ -489,25 +489,25 @@ Rectangle {
 
             onDefaultFrameSize: {
                 if(m_Snap) {
-                    output_value.currentIndex = outputIndexValue                    
+                    output_value.currentIndex = outputIndexValue
                 }
                 output_size_box_Video.currentIndex = outputIndexValue
                 vidstreamproperty.width = defaultWidth
                 vidstreamproperty.height = defaultHeight
             }
 
-            onDefaultStillFrameSize: {                
-                output_value.currentIndex = outputIndexValue                
+            onDefaultStillFrameSize: {
+                output_value.currentIndex = outputIndexValue
             }
 
-            onDefaultOutputFormat: {                                
+            onDefaultOutputFormat: {
                 if(m_Snap){
                     color_comp_box.currentIndex = formatIndexValue
                 }
 
                 if(!stillPreview){
-                    color_comp_box_VideoPin.currentIndex = formatIndexValue                    
-                }                
+                    color_comp_box_VideoPin.currentIndex = formatIndexValue
+                }
             }
 
             onDefaultFrameInterval:{
@@ -903,7 +903,7 @@ Rectangle {
                         record.enabled = true
                         record.opacity = 1
                         keyEventFiltering = false
-                        vidstreamproperty.enabled = true                                                
+                        vidstreamproperty.enabled = true
                         webcamKeyAccept = true
                         vidstreamproperty.stopCapture()
                         vidstreamproperty.closeDevice()
@@ -938,14 +938,14 @@ Rectangle {
                         ledModeComboEnable = false
                         exposureComboEnable =  false
                         setOpacityFalse()
-                        vidstreamproperty.startAgain()                        
+                        vidstreamproperty.startAgain()
                         vidstreamproperty.width = output_value.currentText.toString().split("x")[0].toString()
                         vidstreamproperty.height = output_value.currentText.toString().split("x")[1].toString()
                         vidstreamproperty.lastPreviewResolution(output_value.currentText.toString(),color_comp_box.currentIndex.toString())
                         JS.stillCaptureFormat = color_comp_box.currentIndex.toString()
                         JS.stillCaptureResolution = output_value.currentText.toString()
                         JS.videoCaptureFormat = JS.stillCaptureFormat
-                        JS.videoCaptureResolution = JS.stillCaptureResolution                        
+                        JS.videoCaptureResolution = JS.stillCaptureResolution
                         vidstreamproperty.masterModeEnabled()
                     }
                 }
@@ -1007,6 +1007,7 @@ Rectangle {
             id: cameraColumnLayout
             Item {
                 id: videoFilter
+
                 Button {
                     id: video_capture_filter
                     y: 206
@@ -1033,7 +1034,7 @@ Rectangle {
                         x:10
                         y: 35
                         width: 257
-                        height: 160
+                        height: 500
                         visible: false
                         style: ScrollViewStyle {
                             scrollToClickedPosition: true
@@ -1055,6 +1056,7 @@ Rectangle {
                             }
                         }
                         Item {
+                            id: scrolledItem
                             height: focus_value.y + 85
                             GridLayout {
                                 id: grid
@@ -1086,7 +1088,7 @@ Rectangle {
                                     }
                                 }
                                 TextField {
-                                    id: brightness_value                                    
+                                    id: brightness_value
                                     text: brightness_Slider.value
                                     font.pixelSize: 10
                                     font.family: "Ubuntu"
@@ -1329,7 +1331,7 @@ Rectangle {
                                                 white_balance_Slider.opacity = 0.1
                                                 white_balance_Slider.enabled = false
                                             } else {
-                                                camproperty.logDebugWriter("White Balance set to Manual Mode")                                                
+                                                camproperty.logDebugWriter("White Balance set to Manual Mode")
                                                 vidstreamproperty.changeSettings(whiteBalanceControl_auto_Id,0)
                                                 white_balance_Slider.opacity = 1
                                                 white_balance_Slider.enabled = true
@@ -1594,7 +1596,7 @@ Rectangle {
                                     style: ComboBoxStyle {
                                         background: Image {
                                             id: deviceBox_powerLine
-                                            source: "images/plinefreq_box.png"                                            
+                                            source: "images/plinefreq_box.png"
                                             Rectangle {
                                                 width: deviceBox_powerLine.sourceSize.width - 20
                                                 height: deviceBox_powerLine.sourceSize.height + 3
@@ -1746,10 +1748,10 @@ Rectangle {
                                     CheckBox {
                                         id: exposureAutoPriorityCheck
                                         onCheckedChanged: {
-                                            if(checked) {                                                
+                                            if(checked) {
                                                 camproperty.logDebugWriter("enable exposure auto priority")
                                                 vidstreamproperty.changeSettings(exposureAutoPriorityControlId,1)
-                                            } else {                                                
+                                            } else {
                                                 camproperty.logDebugWriter("disable exposure auto priority")
                                                 vidstreamproperty.changeSettings(exposureAutoPriorityControlId,0)
                                             }
@@ -1825,7 +1827,7 @@ Rectangle {
                                     onValueChanged: {
                                         if(rawBitsValueChangeProperty) {
                                             camproperty.logDebugWriter("raw bits per pixel settings changed to: "+ value.toString())
-                                            vidstreamproperty.changeSettings(rawBitsControlId,value.toString())                                            
+                                            vidstreamproperty.changeSettings(rawBitsControlId,value.toString())
                                         }
                                     }
                                 }
@@ -1890,7 +1892,7 @@ Rectangle {
                                         }
                                     }
                                     onCurrentIndexChanged: {
-                                        if(ledModeComboEnable) {                                            
+                                        if(ledModeComboEnable) {
                                             vidstreamproperty.changeSettings(ledModeComboControlId,currentIndex.toString())
                                         }
                                     }
@@ -2023,13 +2025,13 @@ Rectangle {
                                     CheckBox {
                                         id: disableVideoProcessCheck
                                         onCheckedChanged: {
-                                            if(checked) {                                                
+                                            if(checked) {
                                                 camproperty.logDebugWriter("Disable video processing")
                                                 vidstreamproperty.changeSettings(disableVideoControlId,1)
-                                            } else {                                                
+                                            } else {
                                                 camproperty.logDebugWriter("Enable video processing")
                                                 vidstreamproperty.changeSettings(disableVideoControlId,0)
-                                            }                                            
+                                            }
                                         }
                                     }
                                 }
@@ -2056,7 +2058,7 @@ Rectangle {
                                         opacity: 0.1
                                     }
                                     CheckBox {
-                                        id: autoSelect_focus                                        
+                                        id: autoSelect_focus
                                         style: CheckBoxStyle {
                                             label: Text {
                                                 id: autofocus
@@ -2172,7 +2174,7 @@ Rectangle {
                     }
                     Keys.onReturnPressed: {
                         videoControlFilter()
-                    }                    
+                    }
                 }
             }
 
@@ -2197,7 +2199,7 @@ Rectangle {
                             source: "images/stillcapturesettings.png"
                         }
                     }
-                    y: video_capture_filter_Child.visible ? 400 : 240
+                    y: video_capture_filter_Child.visible ? video_capture_filter.y + video_capture_filter.height + video_capture_filter_Child.height + 20 : 240
                     opacity: 1
                     Item {
                         id: stillchildProperty
@@ -2481,7 +2483,7 @@ Rectangle {
                             x:10
                             y:35
                             width: 257
-                            height: 160
+                            height: 460
                             visible: false
                             style: ScrollViewStyle {
                                 scrollToClickedPosition: true
@@ -2548,7 +2550,7 @@ Rectangle {
                                         }
                                     }
                                     onCurrentIndexChanged: {
-                                        if(frameRateBox) {                                            
+                                        if(frameRateBox) {
                                             videoPinFrameInterval = currentIndex
                                             updateScenePreview(output_size_box_Video.currentText.toString(), color_comp_box_VideoPin.currentIndex.toString(),currentIndex)
                                         }
@@ -2609,9 +2611,9 @@ Rectangle {
                                         }
                                     }
                                     onCurrentIndexChanged: {
-                                        if(colorSpace) {                                            
+                                        if(colorSpace) {
                                             vidFormatChanged = true
-                                            JS.videoCaptureFormat = color_comp_box_VideoPin.currentIndex.toString()                                            
+                                            JS.videoCaptureFormat = color_comp_box_VideoPin.currentIndex.toString()
                                             updateScenePreview(vidstreamproperty.width.toString() +"x"+vidstreamproperty.height.toString(), color_comp_box_VideoPin.currentIndex.toString(),frame_rate_box.currentIndex)
                                             vidstreamproperty.displayVideoResolution()
                                             updateFPS(currentText.toString(), output_size_box_Video.currentText.toString())
@@ -2671,13 +2673,13 @@ Rectangle {
                                             font.family: "Ubuntu"
                                             font.pixelSize: 14
                                         }
-                                    }                                    
-                                    onCurrentIndexChanged: {                                        
+                                    }
+                                    onCurrentIndexChanged: {
                                         JS.videoCaptureResolution = output_size_box_Video.currentText.toString();
                                         if(outputSizeBox) {
                                             updateFPS(color_comp_box_VideoPin.currentText.toString(), currentText.toString())
                                             updateScenePreview(output_size_box_Video.currentText.toString(), color_comp_box_VideoPin.currentIndex.toString(),frame_rate_box.currentIndex)
-                                        }                                        
+                                        }
                                     }
                                     Component.onCompleted: {
                                         outputSizeBox = true
@@ -2969,14 +2971,14 @@ Rectangle {
         Component {
             id: econTextFieldStyle
             TextFieldStyle {
-                textColor: "black"                
+                textColor: "black"
                 background: Rectangle {
                     radius: 2
                     implicitWidth: 50
                     implicitHeight: 20
                     border.color: "#333"
                     border.width: 2
-                    y: 1                    
+                    y: 1
                 }
             }
         }
@@ -3190,7 +3192,7 @@ Rectangle {
         exposureAutoPriority.opacity = 0.1
         exposureAutoPriorityCheck.opacity = 0.1
         exposureAutoPriorityCheck.enabled = false
-        backLightCompensation.opacity = 0.1        
+        backLightCompensation.opacity = 0.1
         backLight_Slider.enabled = false
         backLight_Slider.minimumValue = -65536
         backLight_Slider.maximumValue = 65536
@@ -3234,8 +3236,8 @@ Rectangle {
     }
 
     function updateScenePreview(str, format, fps) {
-        m_Snap = false        
-        if (!vidFormatChanged){            
+        m_Snap = false
+        if (!vidFormatChanged){
             vidstreamproperty.width = str.toString().split("x")[0].toString()
             vidstreamproperty.height = str.toString().split("x")[1].toString()
         }
@@ -3252,7 +3254,7 @@ Rectangle {
 
     function updateStillPreview(str, format) {
         m_Snap = false
-        stillPreview = true        
+        stillPreview = true
         vidstreamproperty.stopCapture()
         vidstreamproperty.vidCapFormatChanged(format)
         vidstreamproperty.displayStillResolution()
@@ -3268,7 +3270,7 @@ Rectangle {
         }
     }
 
-    function updateFPS(pix, size) {        
+    function updateFPS(pix, size) {
         vidstreamproperty.updateFrameInterval(pix, size)
     }
 
@@ -3277,7 +3279,7 @@ Rectangle {
         controlType = ctrlType;
         controlMinValue = ctrlMinValue
         controlMaxValue = ctrlMaxValue
-        controlDefaultValue = ctrlDefaultValue        
+        controlDefaultValue = ctrlDefaultValue
         switch(controlType) {
         case 0:
             break;
@@ -3355,7 +3357,7 @@ Rectangle {
                 ledModeCombo.opacity = 1
                 ledModeCombo.currentIndex = controlDefaultValue
             } else if(controlName === "White Balance Temperature") {
-                white_balance.opacity = 1                
+                white_balance.opacity = 1
                 whiteBalanceControlId = ctrlID
                 white_balance_Slider.minimumValue = controlMinValue
                 white_balance_Slider.maximumValue = controlMaxValue
@@ -3389,7 +3391,7 @@ Rectangle {
                 sharpness_Slider.value = controlDefaultValue
             } else if(controlName === "Exposure (Absolute)") {
                 exposure_absolute.opacity = 1
-                if((device_box.currentText === "e-con's CX3 RDK with O\nV5680") || (device_box.currentText === "e-con's CX3 RDK with M\nT9P031") || (device_box.currentText === "See3CAM_CU40") ) {                    
+                if((device_box.currentText === "e-con's CX3 RDK with O\nV5680") || (device_box.currentText === "e-con's CX3 RDK with M\nT9P031") || (device_box.currentText === "See3CAM_CU40") ) {
                     exposure_Slider.opacity = 1
                     exposure_Slider.enabled = true
                     exposure_value.opacity = 1
@@ -3452,7 +3454,7 @@ Rectangle {
             }
             break;
         case 2:
-            if(controlName == "White Balance Temperature, Auto") {                
+            if(controlName == "White Balance Temperature, Auto") {
                 white_balance.opacity = 1
                 autoSelect_wb.opacity = 1
                 autoSelect_wb.enabled = true
@@ -3640,7 +3642,7 @@ Rectangle {
             vidstreamproperty.stopCapture()
             vidstreamproperty.vidCapFormatChanged(JS.videoCaptureFormat)
             vidstreamproperty.setResoultion(JS.videoCaptureResolution);
-            vidstreamproperty.startAgain();            
+            vidstreamproperty.startAgain();
         }
     }
 
@@ -3777,11 +3779,11 @@ Rectangle {
         if(device_box.currentText == "e-con's 1MP Monochrome\n Camera") {
             if(JS.masterMode_M === 1) {
                 videoPin()
-            } else {                
+            } else {
                 video_Capture_property_Child.visible = false
                 messageDialog.title = qsTr("Disabled")
                 messageDialog.text = qsTr("Video Capture Settings is disabled in trigger Mode")
-                messageDialog.open()                
+                messageDialog.open()
             }
         } else if(device_box.currentText == "e-con's 1MP Bayer RGB \nCamera") {
             if(JS.masterMode_B === 1) {

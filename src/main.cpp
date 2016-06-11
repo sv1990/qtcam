@@ -75,7 +75,7 @@ int main(int argc, char *argv[])
 
     if(argc > 1){
     if(strcmp(argv[1],"-l") == 0 || strcmp(argv[1],"--log") == 0){
-        Cameraproperty camPropertyParam(true);
+        Cameraproperty::setSaveLog(true);
     }
         else{
             qDebug()<<"Usage: qtcam [OPTION]";
@@ -94,12 +94,17 @@ int main(int argc, char *argv[])
     viewer.rootContext()->setContextProperty("SystemPictureFolder",QStandardPaths::standardLocations(QStandardPaths::PicturesLocation).first());
     viewer.rootContext()->setContextProperty("SystemVideoFolder",QStandardPaths::standardLocations(QStandardPaths::MoviesLocation).first());
 
-    auto test_set_path = [&viewer](const QString& root)->bool
+    QString finalRoot;
+
+    auto test_set_path = [&viewer, &finalRoot](const QString& root)->bool
     {
         QString p = root + QStringLiteral("/qml/qtcam/videocapturefilter_QML/videocapturefilter_qml.qml");
         bool r = QFile::exists(p);
         if (r)
+        {
             viewer.setMainQmlFile(p);
+            finalRoot = root;
+        }
         return r;
     };
 
@@ -111,7 +116,7 @@ int main(int argc, char *argv[])
     QObject::connect(rootObject,SIGNAL(stopCamPreview()),rootObject,SLOT(triggerModeCapture()));
 
     //Setting the Window ICON
-    QIcon icon("/usr/share/qml/qtcam/icon/images/icon.jpg");
+    QIcon icon(finalRoot + "/qml/qtcam/icon/images/icon.jpg");
     viewer.setIcon(icon);
     viewer.setTitle("Qtcam");
     viewer.showMaximized();
