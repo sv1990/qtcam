@@ -35,7 +35,7 @@ SOURCES += main.cpp \
 
 # Installation path
 # target.path =
-target.path = /usr/
+target.path = /usr/bin/
 
 # Please do not modify the following two lines. Required for deployment.
 include(qtquick2applicationviewer/qtquick2applicationviewer.pri)
