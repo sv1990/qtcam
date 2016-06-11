@@ -27,7 +27,7 @@ using namespace std;
 H264Decoder::H264Decoder()
 {
     initVars();
-    av_register_all();    
+    av_register_all();
 }
 
 H264Decoder::~H264Decoder()
@@ -38,9 +38,9 @@ H264Decoder::~H264Decoder()
 bool H264Decoder::initH264Decoder(unsigned width, unsigned height)
 {
     // find the decoder
-    pH264Codec = avcodec_find_decoder(CODEC_ID_H264);
+    pH264Codec = avcodec_find_decoder(AV_CODEC_ID_H264);
     if (!pH264Codec)
-    {        
+    {
         return false;
     }
 
@@ -53,7 +53,7 @@ bool H264Decoder::initH264Decoder(unsigned width, unsigned height)
 #endif
 
     pH264CodecCtx->flags2 |= CODEC_FLAG2_FAST;
-    pH264CodecCtx->pix_fmt = PIX_FMT_YUV420P;
+    pH264CodecCtx->pix_fmt = AV_PIX_FMT_YUV420P;
     pH264CodecCtx->width = width;
     pH264CodecCtx->height = height;
 
@@ -62,19 +62,27 @@ bool H264Decoder::initH264Decoder(unsigned width, unsigned height)
 #else
     if (avcodec_open(pH264CodecCtx, pH264Codec) < 0)
 #endif
-    {        
+    {
         return false;
     }
 
+//not really sure about versions here ...just compiles with latest as at mid-2016
 #if LIBAVCODEC_VER_AT_LEAST(53,34)
-    pH264picture = avcodec_alloc_frame();
-#else
     pH264picture = av_frame_alloc();
+#else
+    pH264picture = avcodec_alloc_frame();
 #endif
+
     if(pH264picture==0)
         return false;
 
+//not really sure about versions here ...just compiles with latest as at mid-2016
+#if LIBAVCODEC_VER_AT_LEAST(53,34)
+    av_frame_unref(pH264picture);
+#else
     avcodec_get_frame_defaults(pH264picture);
+#endif
+
 
     h264PictureSize = avpicture_get_size(pH264CodecCtx->pix_fmt, pH264CodecCtx->width, pH264CodecCtx->height);
     h264pictureBuf = new uint8_t[h264PictureSize];
@@ -83,7 +91,7 @@ bool H264Decoder::initH264Decoder(unsigned width, unsigned height)
         av_free(pH264picture);
         pH264picture=0;
         return false;
-    }    
+    }
     return true;
 }
 

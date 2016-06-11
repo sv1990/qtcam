@@ -6,7 +6,9 @@ DEPLOYMENTFOLDERS = folder_01
 QT += widgets
 TARGET = Qtcam
 
-CONFIG += release
+CONFIG += c++11
+
+#CONFIG += release
 
 # Additional import path used to resolve QML modules in Creator's code model
 QML_IMPORT_PATH =
@@ -39,6 +41,11 @@ target.path = /usr/
 include(qtquick2applicationviewer/qtquick2applicationviewer.pri)
 qtcAddDeployment()
 
+CONFIG(debug):
+{
+  message( "Building the DEBUG Version" )
+  DEFINES += _DEBUG
+}
 
 HEADERS += \
     logger.h \
@@ -57,13 +64,10 @@ HEADERS += \
     seecam_cu51.h \
     see3cam_cu130.h \
     h264decoder.h \
-    ascella.h
+    ascella.h \
+    incl_libs.h
 
-
-INCLUDEPATH +=  $$PWD/v4l2headers/include \
-                /usr/include \
-                /usr/include/libusb-1.0
-
+INCLUDEPATH +=  $$PWD/v4l2headers/include
 
 
 LIBS += -lv4l2 -lv4lconvert \
@@ -73,7 +77,7 @@ LIBS += -lv4l2 -lv4lconvert \
         -lswscale \
         -ludev \
         -lusb-1.0 \
-        -L/usr/lib/ -lturbojpeg
+        -lturbojpeg
 
 
 QMAKE_CFLAGS_THREAD = -D__STDC_CONSTANT_MACROS      #For Ubuntu 12.04 compilation

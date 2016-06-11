@@ -20,27 +20,7 @@
 #ifndef H264DECODER_H
 #define H264DECODER_H
 
-
-/* checking version compatibility */
-#define LIBAVCODEC_VER_AT_LEAST(major,minor)  (LIBAVCODEC_VERSION_MAJOR > major || \
-                                              (LIBAVCODEC_VERSION_MAJOR == major && \
-                                               LIBAVCODEC_VERSION_MINOR >= minor))
-
-//#if !LIBAVCODEC_VER_AT_LEAST(54,25)
-//    #define AV_CODEC_ID_H264 CODEC_ID_H264
-//#endif
-
-extern "C" {
-#include "libavcodec/avcodec.h"
-#include "libavformat/avformat.h"
-#include "libavutil/mathematics.h"
-#include "libavutil/rational.h"
-#include "libavutil/avstring.h"
-#include "libswscale/swscale.h"
-#include "libavutil/intreadwrite.h"
-#include "libavutil/dict.h"
-}
-
+#include "incl_libs.h"
 
 class H264Decoder
 {

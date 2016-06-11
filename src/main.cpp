@@ -55,13 +55,13 @@ int main(int argc, char *argv[])
     qmlRegisterType<Cameraproperty>("econ.camera.property",1,0,"Camproperty");
     qmlRegisterType<Videostreaming>("econ.camera.stream", 1, 0, "Videostreaming");
     qmlRegisterType<uvccamera>("econ.camera.uvcsettings", 1, 0, "Uvccamera");
-    qmlRegisterType<See3CAM_11CUG>("econ.camera.see3cam11", 1, 0, "See3Cam11");    
-    qmlRegisterType<See3CAM_AR130>("econ.camera.see3camar0130", 1, 0, "See3Camar0130");    
+    qmlRegisterType<See3CAM_11CUG>("econ.camera.see3cam11", 1, 0, "See3Cam11");
+    qmlRegisterType<See3CAM_AR130>("econ.camera.see3camar0130", 1, 0, "See3Camar0130");
     qmlRegisterType<See3CAM_10CUG_Bayer>("econ.camera.see3cam10Bayer", 1, 0, "See3Cam10Bayer");
     qmlRegisterType<See3CAM_10CUG_Mono>("econ.camera.see3cam10Mono", 1, 0, "See3Cam10Mono");
     qmlRegisterType<See3CAM_80>("econ.camera.see3cam80", 1, 0, "See3Cam80");
-    qmlRegisterType<See3CAM_CU50>("econ.camera.see3cam50", 1, 0, "See3Cam50");    
-	qmlRegisterType<See3CAM_CU130>("econ.camera.see3cam130", 1, 0, "See3Cam130");
+    qmlRegisterType<See3CAM_CU50>("econ.camera.see3cam50", 1, 0, "See3Cam50");
+    qmlRegisterType<See3CAM_CU130>("econ.camera.see3cam130", 1, 0, "See3Cam130");
     qmlRegisterType<See3CAM_CU51>("econ.camera.see3cam51", 1, 0, "See3Cam51");
     qmlRegisterType<ASCELLA>("econ.camera.ascella", 1, 0, "Ascella");
     qmlRegisterType<See3CAM_Control>("econ.camera.see3camControl", 1, 0, "See3CamCtrl");
@@ -71,12 +71,12 @@ int main(int argc, char *argv[])
     QtQuick2ApplicationViewer viewer;
 
     //Create a object for Camera property
-    Cameraproperty camProperty;    
+    Cameraproperty camProperty;
 
     if(argc > 1){
-	if(strcmp(argv[1],"-l") == 0 || strcmp(argv[1],"--log") == 0){
-		Cameraproperty camPropertyParam(true);
-	}
+    if(strcmp(argv[1],"-l") == 0 || strcmp(argv[1],"--log") == 0){
+        Cameraproperty camPropertyParam(true);
+    }
         else{
             qDebug()<<"Usage: qtcam [OPTION]";
             qDebug()<<"-l, --log    to create log in a directory\n";
@@ -94,7 +94,18 @@ int main(int argc, char *argv[])
     viewer.rootContext()->setContextProperty("SystemPictureFolder",QStandardPaths::standardLocations(QStandardPaths::PicturesLocation).first());
     viewer.rootContext()->setContextProperty("SystemVideoFolder",QStandardPaths::standardLocations(QStandardPaths::MoviesLocation).first());
 
-    viewer.setMainQmlFile(QStringLiteral("/usr/share/qml/qtcam/videocapturefilter_QML/videocapturefilter_qml.qml"));
+    auto test_set_path = [&viewer](const QString& root)->bool
+    {
+        QString p = root + QStringLiteral("/qml/qtcam/videocapturefilter_QML/videocapturefilter_qml.qml");
+        bool r = QFile::exists(p);
+        if (r)
+            viewer.setMainQmlFile(p);
+        return r;
+    };
+
+    if (!test_set_path("/usr/share"))
+        test_set_path(app.applicationDirPath());
+
     QObject *rootObject = dynamic_cast<QObject*>(viewer.rootObject());
 
     QObject::connect(rootObject,SIGNAL(stopCamPreview()),rootObject,SLOT(triggerModeCapture()));

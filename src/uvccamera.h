@@ -35,7 +35,7 @@
 #include <linux/input.h>
 #include <linux/hidraw.h>
 #include "libudev.h"
-#include <libusb.h>
+#include <libusb-1.0/libusb.h>
 #include <QMap>
 
 /* Report Numbers */
