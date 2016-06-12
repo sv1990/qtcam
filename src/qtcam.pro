@@ -8,6 +8,13 @@ TARGET = Qtcam
 
 CONFIG += c++11
 
+#generating embedded resourses for all those files
+win32: PERL=perl.exe
+else:  PERL=perl
+system(cd $$PWD; $$PERL makeqrc.pl > qmls.qrc)
+RESOURCES += qmls.qrc
+
+
 #CONFIG += release
 
 # Additional import path used to resolve QML modules in Creator's code model
@@ -85,3 +92,4 @@ QMAKE_CXXFLAGS_THREAD = -D__STDC_CONSTANT_MACROS    #For Ubuntu 12.04 compilatio
 
 OTHER_FILES += \
     qml/qtcam/videocapturefilter_QML/videocapturefilter_qml.qml
+

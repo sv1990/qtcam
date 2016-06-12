@@ -64,11 +64,12 @@ QtQuick2ApplicationViewer::~QtQuick2ApplicationViewer()
 
 void QtQuick2ApplicationViewer::setMainQmlFile(const QString &file)
 {
-    d->mainQmlFile = QtQuick2ApplicationViewerPrivate::adjustPath(file);
+    d->mainQmlFile = file; //QtQuick2ApplicationViewerPrivate::adjustPath(file);
 #if defined(Q_OS_ANDROID) && !defined(Q_OS_ANDROID_NO_SDK)
+#warning "Possibly you must revise QML path here and remove this ifdef at all. Because now it is embedded into binary."
     setSource(QUrl(QLatin1String("assets:/")+d->mainQmlFile));
 #else
-    setSource(QUrl::fromLocalFile(d->mainQmlFile));
+    setSource(QUrl("qrc"+d->mainQmlFile));
 #endif
 }
 

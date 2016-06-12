@@ -92,7 +92,7 @@ Window {
 
     Text {
         id: copyrights
-        text: "Copyright © 2015  e-con Systems India Pvt. Limited"
+        text: "Copyright © 2015  e-con Systems India Pvt. Limited\n2016 fixes- alexzkhr@gmail.com"
         font.pixelSize: 15
         font.family: "Ubuntu Light"
         color: "#ffffff"
