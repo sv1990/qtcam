@@ -19,6 +19,11 @@
  */
 
 #include "about.h"
+#include <QSettings>
+#include <QImage>
+#include <QDebug>
+#include <QFile>
+
 
 AboutPage::AboutPage()
 {

@@ -21,10 +21,8 @@
 #ifndef ABOUT_H
 #define ABOUT_H
 
-#include <QSettings>
-#include <QImage>
-#include <QDebug>
-#include <QFile>
+#include <QObject>
+#include <QString>
 
 class AboutPage:public QObject
 {
