@@ -4,7 +4,7 @@ folder_01.target = qml
 DEPLOYMENTFOLDERS = folder_01
 
 QT += widgets
-TARGET = Qtcam
+TARGET = qtcam
 
 CONFIG += c++11
 
