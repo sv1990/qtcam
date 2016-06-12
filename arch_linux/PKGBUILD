@@ -1,0 +1,50 @@
+# Maintainer: Alex <alexzkhr public at gmail dot com>
+
+pkgname=qtcam-git-fork-2016
+pkgver=r16.caa7d6a
+pkgrel=1
+pkgdesc='A free, Open Source Linux Webcamera Software with more than 10 image control settings'
+arch=('i686' 'x86_64')
+url='http://www.e-consystems.com/opensource-linux-webcam-software-application.asp'
+license=('GPL')
+depends=(
+qt5-declarative
+ffmpeg
+libusb
+perl
+)
+conflicts=(qtcam-git)
+
+if [[ $CARCH = x86_64 ]]; then
+  depends+=(gcc-libs-multilib)
+fi
+makedepends=(
+git
+qtchooser
+)
+source=(
+'git://github.com/alexzk1/qtcam.git'
+qtcam.desktop
+)
+sha256sums=('SKIP'
+            'e185af699a218115b5b2b3223d6989e5abcb56293f3e19c4e57308a460c86834')
+_gitname='qtcam'
+prepare() {    
+   cd $_gitname
+}
+
+pkgver() {
+  cd $_gitname
+  printf "r%s.%s" "$(git rev-list --count HEAD)" "$(git rev-parse --short HEAD)"
+}
+build() {
+  cd $_gitname/src
+  qmake
+  make
+}
+package() {
+  cd $_gitname/src
+  #make INSTALL_ROOT="$pkgdir" install  
+  install -Dm755 "$srcdir"/qtcam/src/qtcam "$pkgdir"/usr/bin/qtcam 
+  install -Dm644 "$srcdir"/qtcam.desktop "$pkgdir"/usr/share/applications/qtcam.desktop 
+}
