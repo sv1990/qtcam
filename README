@@ -44,6 +44,14 @@ TODOS:
 4. Enhance the application by sending the captured data over the network.
 5. Add support for audio recording.
 
+FIXME:
+******
+Project is barely modifiable. For example, uses static for the camera 
+handle - really ? I may have couple cameras at once...
+It seems will have to start some new project. I need convinient wat to picture 
+over telescope without clicking and scrolling a lot.
+
+
 Known Issues/Bugs:
 ******************
 1. If there is a drop in frame rates during video recording, then the actual video playback time and recording time is different.
