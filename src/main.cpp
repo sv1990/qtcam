@@ -94,27 +94,12 @@ int main(int argc, char *argv[])
     viewer.rootContext()->setContextProperty("SystemPictureFolder",QStandardPaths::standardLocations(QStandardPaths::PicturesLocation).first());
     viewer.rootContext()->setContextProperty("SystemVideoFolder",QStandardPaths::standardLocations(QStandardPaths::MoviesLocation).first());
 
-//    QString finalRoot;
-
-//    auto test_set_path = [&viewer, &finalRoot](const QString& root)->bool
-//    {
-//        QString p = root + QStringLiteral("/qml/qtcam/videocapturefilter_QML/videocapturefilter_qml.qml");
-//        bool r = QFile::exists(p);
-//        if (r)
-//        {
-//            viewer.setMainQmlFile(p);
-//            finalRoot = root;
-//        }
-//        return r;
-//    };
-
-//    if (!test_set_path("/usr/share"))
-//        test_set_path(app.applicationDirPath());
 
     QObject *rootObject = dynamic_cast<QObject*>(viewer.rootObject());
 
     QObject::connect(rootObject,SIGNAL(stopCamPreview()),rootObject,SLOT(triggerModeCapture()));
     viewer.setMainQmlFile(":/qml/qtcam/videocapturefilter_QML/videocapturefilter_qml.qml");
+
     //Setting the Window ICON
     QIcon icon(":/qml/qtcam/icon/images/icon.jpg");
     viewer.setIcon(icon);

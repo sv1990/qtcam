@@ -150,7 +150,7 @@ void Videostreaming::capFrame()
     //Modified by Nithyesh
     //Previously it was int err = 0, x, y;
     int err = 0;
-    __u32 x, y;
+    uint32_t x, y;
     bool again, v4l2convert = false;
 
     memset(planes, 0, sizeof(planes));
@@ -404,7 +404,7 @@ void Videostreaming::capFrame()
                 setResoultion(lastPreviewSize);
                 startAgain();
                 formatSaveSuccess(tmpValue);
-                return void();
+                return;
             }
             else{
                 formatSaveSuccess(tmpValue);
