@@ -69,14 +69,13 @@ void logger::logFileCreation() {
         dt += "\n********************************************************************************";
         ts << dt << "\n" << flush;
     }
-    QSettings *releaseSettings = new QSettings(":/qml/qtcam/about/release.ini",QSettings::IniFormat);
-    releaseSettings->beginGroup("release");
-    DEBUG = releaseSettings->value("logDebugEnable").toBool();
-    WARNING = releaseSettings->value("logWarningEnable").toBool();
-    FATAL = releaseSettings->value("logFatalEnable").toBool();
-    CRITICAL = releaseSettings->value("logCriticalEnable").toBool();
-    releaseSettings->endGroup();
-    delete releaseSettings;
+    QSettings releaseSettings(":/qml/qtcam/about/release.ini",QSettings::IniFormat);
+    releaseSettings.beginGroup("release");
+    DEBUG = releaseSettings.value("logDebugEnable").toBool();
+    WARNING = releaseSettings.value("logWarningEnable").toBool();
+    FATAL = releaseSettings.value("logFatalEnable").toBool();
+    CRITICAL = releaseSettings.value("logCriticalEnable").toBool();
+    releaseSettings.endGroup();
 }
 
 void logger::logHandler(QtMsgType type,QString msg)

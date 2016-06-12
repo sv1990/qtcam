@@ -36,8 +36,6 @@ public:
     QString titleText();
 
 private:
-    QSettings *version;
-    QFile *copyRightFile;
     QString appName,appVerNumber,appRevNumber,appReleaseDate;
     QByteArray copyRight;
 
