@@ -8,7 +8,7 @@ TARGET = Qtcam
 
 CONFIG += c++11
 
-#generating embedded resourses for all those files
+#generating embedded resourses for all those files (former deployment)
 win32: PERL=perl.exe
 else:  PERL=perl
 system(cd $$PWD; $$PERL makeqrc.pl > qmls.qrc)
@@ -46,7 +46,9 @@ target.path = /usr/bin/
 
 # Please do not modify the following two lines. Required for deployment.
 include(qtquick2applicationviewer/qtquick2applicationviewer.pri)
-qtcAddDeployment()
+
+#do not need deployment since it is already inside binary
+#qtcAddDeployment()
 
 CONFIG(debug):
 {
