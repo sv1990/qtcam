@@ -1034,7 +1034,7 @@ Rectangle {
                         x:10
                         y: 35
                         width: 257
-                        height: 500
+                        height: 250
                         visible: false
                         style: ScrollViewStyle {
                             scrollToClickedPosition: true
