@@ -9,6 +9,8 @@ url='http://www.e-consystems.com/opensource-linux-webcam-software-application.as
 license=('GPL')
 depends=(
 qt5-declarative
+qt5-quickcontrols
+qt5-quickcontrols2
 ffmpeg
 libusb
 perl

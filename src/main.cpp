@@ -93,12 +93,10 @@ int main(int argc, char *argv[])
     viewer.rootContext()->setContextProperty("fpsAvailable", &vs.fpsList);
     viewer.rootContext()->setContextProperty("SystemPictureFolder",QStandardPaths::standardLocations(QStandardPaths::PicturesLocation).first());
     viewer.rootContext()->setContextProperty("SystemVideoFolder",QStandardPaths::standardLocations(QStandardPaths::MoviesLocation).first());
-
-
-    QObject *rootObject = dynamic_cast<QObject*>(viewer.rootObject());
-
-    QObject::connect(rootObject,SIGNAL(stopCamPreview()),rootObject,SLOT(triggerModeCapture()));
     viewer.setMainQmlFile(":/qml/qtcam/videocapturefilter_QML/videocapturefilter_qml.qml");
+
+    auto rootObject = viewer.rootObject();
+    QObject::connect(rootObject,SIGNAL(stopCamPreview()),rootObject,SLOT(triggerModeCapture()));
 
     //Setting the Window ICON
     QIcon icon(":/qml/qtcam/icon/images/icon.jpg");
