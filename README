@@ -57,3 +57,7 @@ Known Issues/Bugs:
 1. If there is a drop in frame rates during video recording, then the actual video playback time and recording time is different.
 2. In see3cam50 still capture is sometime gets distorted due to the extra exposure from camera.
 3. For MJPG color space, images captured is not clear only in the case still and preview resolution are different.
+
+
+I'm rewritting important part for me from scratch here;
+https://github.com/alexzk1/qtcampp

@@ -27,6 +27,7 @@
 #include <QMessageBox>
 #include <QRectF>
 #include <fcntl.h>
+#include <QDebug>
 
 #define CLEAR(x) memset(&(x), 0, sizeof(x))
 
@@ -1199,13 +1200,14 @@ void Videostreaming::frameIntervalChanged(int idx)
 }
 
 void Videostreaming::cameraFilterControls(bool actualValue) {
-    v4l2_queryctrl qctrl;
+    v4l2_query_ext_ctrl qctrl;
     v4l2_querymenu qmenu;
     int indexValue;
-    qctrl.id = V4L2_CTRL_FLAG_NEXT_CTRL;
+    qctrl.id = V4L2_CTRL_FLAG_NEXT_CTRL | V4L2_CTRL_FLAG_NEXT_COMPOUND;
     emit logDebugHandle("Available Controls:");
     while(queryctrl(qctrl)) {
         emit logDebugHandle((char*)qctrl.name);
+        qDebug() << (char*)qctrl.name;
         switch (qctrl.type) {
         case V4L2_CTRL_TYPE_BOOLEAN:
             ctrlName = (char*)qctrl.name;
@@ -1235,7 +1237,8 @@ void Videostreaming::cameraFilterControls(bool actualValue) {
             ctrlName = (char*)qctrl.name;
             ctrlType = QString::number(qctrl.type,10);
             ctrlID = QString::number(qctrl.id,10);
-            for (int i = qctrl.minimum; i <= qctrl.maximum; i++) {
+            for (int i = qctrl.minimum; i <= qctrl.maximum; i++)
+            {
                 qmenu.id = qctrl.id;
                 qmenu.index = i;
                 if (!querymenu(qmenu))
@@ -1266,7 +1269,7 @@ void Videostreaming::cameraFilterControls(bool actualValue) {
         case V4L2_CTRL_TYPE_CTRL_CLASS:
             break;
         }
-        qctrl.id |= V4L2_CTRL_FLAG_NEXT_CTRL;
+        qctrl.id |= V4L2_CTRL_FLAG_NEXT_CTRL | V4L2_CTRL_FLAG_NEXT_COMPOUND;
     }
 }
 
@@ -1303,15 +1306,22 @@ void Videostreaming::changeSettings(unsigned int id, QString value) {
     if (ioctl(VIDIOC_S_CTRL, &c)) {
         emit logCriticalHandle("Error in setting the Value");
     }
+
+    c.id = V4L2_CID_AUTOGAIN;
+    c.value = 0;
+    int err;
+    if (err = ioctl(VIDIOC_S_CTRL, &c)) {
+        qDebug()<<"failed to off AGC" <<err;
+    }
 }
 
 
 void Videostreaming::selectMenuIndex(unsigned int id, int value) {
-    v4l2_queryctrl qctrl;
+    v4l2_query_ext_ctrl qctrl;
     v4l2_querymenu qmenu;
     qctrl.id = id;
     queryctrl(qctrl);
-    int i;
+    __u64 i;
     for (i = qctrl.minimum; i <= qctrl.maximum; i++) {
         qmenu.id = qctrl.id;
         qmenu.index = i;
@@ -1324,11 +1334,11 @@ void Videostreaming::selectMenuIndex(unsigned int id, int value) {
 }
 
 int Videostreaming::getMenuIndex(unsigned int id,int value) {
-    v4l2_queryctrl qctrl;
+    v4l2_query_ext_ctrl qctrl;
     v4l2_querymenu qmenu;
     qctrl.id = id;
     queryctrl(qctrl);
-    int i, j = 0;
+    __u64 i, j = 0;
     for (i = qctrl.minimum; i <= qctrl.maximum; i++) {
         qmenu.id = qctrl.id;
         qmenu.index = i;
