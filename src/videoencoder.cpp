@@ -88,7 +88,7 @@ bool VideoEncoder::createFile(QString fileName, AVCodecID encodeType, unsigned w
         pCodecCtx=pVideoStream->codec;
         // some formats want stream headers to be separate
         if(pFormatCtx->oformat->flags & AVFMT_GLOBALHEADER)
-            pCodecCtx->flags |= CODEC_FLAG_GLOBAL_HEADER;
+            pCodecCtx->flags |= AV_CODEC_FLAG_GLOBAL_HEADER;
 
 
         pCodecCtx->codec_id = pOutputFormat->video_codec;
